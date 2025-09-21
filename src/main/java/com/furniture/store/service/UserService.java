@@ -1,6 +1,7 @@
 package com.furniture.store.service;
 
 import com.furniture.store.constant.PredefinedRole;
+import com.furniture.store.dto.request.ChangePasswordRequest;
 import com.furniture.store.dto.request.UserCreationRequest;
 import com.furniture.store.dto.request.UserUpdateInfoRequest;
 import com.furniture.store.dto.response.UserResponse;
@@ -97,4 +98,21 @@ public class UserService {
     public List<UserResponse> getAll() {
         return userRepository.findAll().stream().map(userMapper::toResponse).toList();
     }
+
+    public void changePassword(ChangePasswordRequest request) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User existsUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        if (!passwordEncoder.matches(request.getOldPassword(), existsUser.getPassword())) {
+            throw new AppException(ErrorCode.INVALID_OLD_PASSWORD);
+        }
+
+        String encodedNewPassword = passwordEncoder.encode(request.getNewPassword());
+        existsUser.setPassword(encodedNewPassword);
+
+        userRepository.save(existsUser);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.furniture.store.controller;
 
 import com.furniture.store.constant.PredefinedRole;
+import com.furniture.store.dto.request.ChangePasswordRequest;
 import com.furniture.store.dto.request.UserCreationRequest;
 import com.furniture.store.dto.request.UserUpdateInfoRequest;
 import com.furniture.store.dto.response.ApiResponse;
@@ -54,10 +55,16 @@ public class UserController {
         return ApiResponse.<Void>builder().build();
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping
     ApiResponse<UserUpdateInfoResponse> updateUser(@RequestBody UserUpdateInfoRequest request) {
         return ApiResponse.<UserUpdateInfoResponse>builder()
                 .result(userService.updateInformation(request))
                 .build();
+    }
+
+    @PutMapping("/change-password")
+    ApiResponse<Void> changePassword(@RequestBody ChangePasswordRequest request) {
+        userService.changePassword(request);
+        return ApiResponse.<Void>builder().build();
     }
 }

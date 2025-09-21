@@ -20,7 +20,14 @@ public enum ErrorCode {
     ROLE_NOT_EXISTED(1010, "Role not existed", HttpStatus.NOT_FOUND),
     PERMISSION_EXISTED(1011, "Permission already existed", HttpStatus.BAD_REQUEST),
     PERMISSION_NOT_EXISTED(1012, "Permission not existed", HttpStatus.NOT_FOUND),
-    TOKEN_NOT_FOUND(1013, "Activation token not found", HttpStatus.BAD_REQUEST);
+    TOKEN_NOT_FOUND(1013, "Activation token not found", HttpStatus.BAD_REQUEST),
+    CATEGORY_ALREADY_EXISTS(1014, "Category already existed", HttpStatus.BAD_REQUEST),
+    CATEGORY_NOT_FOUND(1015, "Category not existed", HttpStatus.NOT_FOUND),
+    INVALID_OLD_PASSWORD(1016, "Old password invalid", HttpStatus.BAD_REQUEST),
+    CITY_ALREADY_EXISTS(1017, "City already existed", HttpStatus.BAD_REQUEST),
+    CITY_NOT_FOUND(1018, "City not existed", HttpStatus.NOT_FOUND),
+    DISTRICT_ALREADY_EXISTS(1019, "District already existed", HttpStatus.BAD_REQUEST),
+    DISTRICT_NOT_FOUND(1020, "District not existed", HttpStatus.NOT_FOUND);
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
