@@ -1,4 +1,4 @@
-package com.furniture.store.dto.request;
+package com.furniture.store.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,7 +8,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class DistrictRequest {
-    String name;
-    Long cityId;
+public class ColorResponse {
+    Long id;
+    String colorName;
+    String colorValue;
 }

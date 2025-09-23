@@ -3,12 +3,15 @@ package com.furniture.store.dto.request;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class DistrictRequest {
-    String name;
+public class AddressRequest {
+    String detail;
+    String addressName;
+    String phoneNumber;
     Long cityId;
+    Long districtId;
 }

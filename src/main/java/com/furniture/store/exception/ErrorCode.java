@@ -27,7 +27,11 @@ public enum ErrorCode {
     CITY_ALREADY_EXISTS(1017, "City already existed", HttpStatus.BAD_REQUEST),
     CITY_NOT_FOUND(1018, "City not existed", HttpStatus.NOT_FOUND),
     DISTRICT_ALREADY_EXISTS(1019, "District already existed", HttpStatus.BAD_REQUEST),
-    DISTRICT_NOT_FOUND(1020, "District not existed", HttpStatus.NOT_FOUND);
+    DISTRICT_NOT_FOUND(1020, "District not existed", HttpStatus.NOT_FOUND),
+    ADDRESS_ALREADY_EXISTS(1021, "Address already existed",HttpStatus.BAD_REQUEST),
+    ADDRESS_NOT_FOUND(1021, "Address not existed",HttpStatus.NOT_FOUND),
+    COLOR_ALREADY_EXISTS(1022, "Color already existed", HttpStatus.BAD_REQUEST),
+    MATERIAL_ALREADY_EXISTS(1023, "Material already existed", HttpStatus.BAD_REQUEST);
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

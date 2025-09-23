@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class DistrictRequest {
-    String name;
-    Long cityId;
+public class MaterialRequest {
+    String materialName;
+    String description;
 }

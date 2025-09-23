@@ -36,15 +36,12 @@ public class UserService {
     PermissionRepository permissionRepository;
     RoleRepository roleRepository;
     UserMapper userMapper;
+    UserContextService userContextService;
     PasswordEncoder passwordEncoder;
     MailService mailService;
 
     public UserResponse getMyInfo() {
-        var context = SecurityContextHolder.getContext();
-        String email = context.getAuthentication().getName();
-
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
-
+        User user = userContextService.getCurrentUser();
         return userMapper.toResponse(user);
     }
 
@@ -85,10 +82,7 @@ public class UserService {
     }
 
     public UserUpdateInfoResponse updateInformation(UserUpdateInfoRequest userUpdate) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        User existsUser = userRepository.findByEmail(email)
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        User existsUser = userContextService.getCurrentUser();
 
         userMapper.toUserEntityUpdate(existsUser, userUpdate);
         return userMapper.toUserUpdateInfoRes(userRepository.save(existsUser));
@@ -100,10 +94,7 @@ public class UserService {
     }
 
     public void changePassword(ChangePasswordRequest request) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        User existsUser = userRepository.findByEmail(email)
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        User existsUser = userContextService.getCurrentUser();
 
         if (!passwordEncoder.matches(request.getOldPassword(), existsUser.getPassword())) {
             throw new AppException(ErrorCode.INVALID_OLD_PASSWORD);
@@ -113,6 +104,7 @@ public class UserService {
         existsUser.setPassword(encodedNewPassword);
 
         userRepository.save(existsUser);
+        //Sau khi thay đổi password thì phải logout để user đó đăng nhập lại bằng mật khẩu mới
     }
 
 }
