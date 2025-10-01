@@ -3,6 +3,7 @@ package com.furniture.store.controller;
 import com.furniture.store.dto.request.CategoryCreationRequest;
 import com.furniture.store.dto.response.ApiResponse;
 import com.furniture.store.dto.response.CategoryResponse;
+import com.furniture.store.dto.response.PaginationResponse;
 import com.furniture.store.service.CategoryService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,17 @@ public class CategoryController {
         }
         return ApiResponse.<List<CategoryResponse>>builder()
                 .result(categoryService.getAll())
+                .build();
+    }
+
+    @GetMapping("/search")
+    public ApiResponse<PaginationResponse<CategoryResponse>> searchCategories(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        return ApiResponse.<PaginationResponse<CategoryResponse>>builder()
+                .result(categoryService.searchCategories(keyword, page, size))
                 .build();
     }
 

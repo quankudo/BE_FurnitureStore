@@ -1,19 +1,20 @@
-package com.furniture.store.dto.response;
+package com.furniture.store.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CategoryResponse {
-    String id;
-    String name;
+
+public class ProductInfoRequest {
+    String productName;
+    String description;
     String slug;
     String imageUrl;
-    Boolean isActive;
-    String desc;
     String imagePublicId;
+    String categoryId;
+    Long supplierId;
 }

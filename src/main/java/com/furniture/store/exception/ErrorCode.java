@@ -7,31 +7,75 @@ import lombok.Getter;
 
 @Getter
 public enum ErrorCode {
+    // ====== Common ======
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
-    INVALID_KEY(1001, "Uncategorized error", HttpStatus.BAD_REQUEST),
-    USER_EXISTED(1002, "User existed", HttpStatus.BAD_REQUEST),
-    USERNAME_INVALID(1003, "Username must be at least {min} characters", HttpStatus.BAD_REQUEST),
-    INVALID_PASSWORD(1004, "Password must be at least {min} characters", HttpStatus.BAD_REQUEST),
-    USER_NOT_EXISTED(1005, "User not existed", HttpStatus.NOT_FOUND),
-    UNAUTHENTICATED(1006, "Unauthenticated", HttpStatus.UNAUTHORIZED),
-    UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
-    INVALID_DOB(1008, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
-    ROLE_EXISTED(1009, "Role already existed", HttpStatus.BAD_REQUEST),
-    ROLE_NOT_EXISTED(1010, "Role not existed", HttpStatus.NOT_FOUND),
-    PERMISSION_EXISTED(1011, "Permission already existed", HttpStatus.BAD_REQUEST),
-    PERMISSION_NOT_EXISTED(1012, "Permission not existed", HttpStatus.NOT_FOUND),
-    TOKEN_NOT_FOUND(1013, "Activation token not found", HttpStatus.BAD_REQUEST),
-    CATEGORY_ALREADY_EXISTS(1014, "Category already existed", HttpStatus.BAD_REQUEST),
-    CATEGORY_NOT_FOUND(1015, "Category not existed", HttpStatus.NOT_FOUND),
-    INVALID_OLD_PASSWORD(1016, "Old password invalid", HttpStatus.BAD_REQUEST),
-    CITY_ALREADY_EXISTS(1017, "City already existed", HttpStatus.BAD_REQUEST),
-    CITY_NOT_FOUND(1018, "City not existed", HttpStatus.NOT_FOUND),
-    DISTRICT_ALREADY_EXISTS(1019, "District already existed", HttpStatus.BAD_REQUEST),
-    DISTRICT_NOT_FOUND(1020, "District not existed", HttpStatus.NOT_FOUND),
-    ADDRESS_ALREADY_EXISTS(1021, "Address already existed",HttpStatus.BAD_REQUEST),
-    ADDRESS_NOT_FOUND(1021, "Address not existed",HttpStatus.NOT_FOUND),
-    COLOR_ALREADY_EXISTS(1022, "Color already existed", HttpStatus.BAD_REQUEST),
-    MATERIAL_ALREADY_EXISTS(1023, "Material already existed", HttpStatus.BAD_REQUEST);
+    INVALID_KEY(1001, "Invalid key", HttpStatus.BAD_REQUEST),
+
+    // ====== User ======
+    USER_EXISTED(2001, "User already existed", HttpStatus.BAD_REQUEST),
+    USER_NOT_EXISTED(2002, "User not existed", HttpStatus.NOT_FOUND),
+    USERNAME_INVALID(2003, "Username must be at least {min} characters", HttpStatus.BAD_REQUEST),
+    INVALID_PASSWORD(2004, "Password must be at least {min} characters", HttpStatus.BAD_REQUEST),
+    INVALID_DOB(2005, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
+
+    // ====== Auth ======
+    UNAUTHENTICATED(2101, "Unauthenticated", HttpStatus.UNAUTHORIZED),
+    UNAUTHORIZED(2102, "You do not have permission", HttpStatus.FORBIDDEN),
+    TOKEN_NOT_FOUND(2103, "Activation token not found", HttpStatus.BAD_REQUEST),
+
+    // ====== Role ======
+    ROLE_EXISTED(2201, "Role already existed", HttpStatus.BAD_REQUEST),
+    ROLE_NOT_EXISTED(2202, "Role not existed", HttpStatus.NOT_FOUND),
+
+    // ====== Permission ======
+    PERMISSION_EXISTED(2301, "Permission already existed", HttpStatus.BAD_REQUEST),
+    PERMISSION_NOT_EXISTED(2302, "Permission not existed", HttpStatus.NOT_FOUND),
+
+    // ====== Category ======
+    CATEGORY_ALREADY_EXISTS(3001, "Category already existed", HttpStatus.BAD_REQUEST),
+    CATEGORY_NOT_FOUND(3002, "Category not existed", HttpStatus.NOT_FOUND),
+    CATEGORY_NAME_REQUIRED(3003, "Tên danh mục không được để trống", HttpStatus.BAD_REQUEST),
+    CATEGORY_NAME_TOO_LONG(3004, "Tên danh mục không được vượt quá 100 ký tự", HttpStatus.BAD_REQUEST),
+    CATEGORY_DESC_TOO_LONG(3005, "Mô tả không được vượt quá 100 ký tự", HttpStatus.BAD_REQUEST),
+
+    // ====== City ======
+    CITY_ALREADY_EXISTS(4001, "City already existed", HttpStatus.BAD_REQUEST),
+    CITY_NOT_FOUND(4002, "City not existed", HttpStatus.NOT_FOUND),
+    CITY_NAME_REQUIRED(4003, "Tên thành phố không được để trống", HttpStatus.BAD_REQUEST),
+    CITY_NAME_TOO_LONG(4004, "Tên thành phố không được vượt quá 100 ký tự", HttpStatus.BAD_REQUEST),
+
+    // ====== District ======
+    DISTRICT_ALREADY_EXISTS(4101, "District already existed", HttpStatus.BAD_REQUEST),
+    DISTRICT_NOT_FOUND(4102, "District not existed", HttpStatus.NOT_FOUND),
+
+    // ====== Address ======
+    ADDRESS_ALREADY_EXISTS(5001, "Address already existed", HttpStatus.BAD_REQUEST),
+    ADDRESS_NOT_FOUND(5002, "Address not existed", HttpStatus.NOT_FOUND),
+    ADDRESS_DETAIL_REQUIRED(5003, "Chi tiết địa chỉ không được để trống", HttpStatus.BAD_REQUEST),
+    ADDRESS_DETAIL_TOO_LONG(5004, "Chi tiết địa chỉ không được vượt quá 255 ký tự", HttpStatus.BAD_REQUEST),
+    ADDRESS_NAME_REQUIRED(5005, "Tên người nhận không được để trống", HttpStatus.BAD_REQUEST),
+    ADDRESS_NAME_TOO_LONG(5006, "Tên người nhận không được vượt quá 100 ký tự", HttpStatus.BAD_REQUEST),
+    ADDRESS_PHONE_REQUIRED(5007, "Số điện thoại không được để trống", HttpStatus.BAD_REQUEST),
+    ADDRESS_PHONE_INVALID(5008, "Số điện thoại không hợp lệ", HttpStatus.BAD_REQUEST),
+
+    // ====== Color ======
+    COLOR_ALREADY_EXISTS(6001, "Color already existed", HttpStatus.BAD_REQUEST),
+    COLOR_NOT_FOUND(6002, "Color not existed", HttpStatus.NOT_FOUND),
+
+    // ====== Material ======
+    MATERIAL_ALREADY_EXISTS(7001, "Material already existed", HttpStatus.BAD_REQUEST),
+    MATERIAL_NOT_FOUND(7002, "Material not existed", HttpStatus.NOT_FOUND),
+    MATERIAL_NAME_REQUIRED(7003, "Tên chất liệu không được để trống", HttpStatus.BAD_REQUEST),
+    MATERIAL_NAME_TOO_LONG(7004, "Tên chất liệu không được vượt quá 100 ký tự", HttpStatus.BAD_REQUEST),
+    MATERIAL_DESC_TOO_LONG(7005, "Mô tả không được vượt quá 255 ký tự", HttpStatus.BAD_REQUEST),
+
+    // ====== Supplier ======
+    SUPPLIER_ALREADY_EXISTS(8001, "Supplier already existed", HttpStatus.BAD_REQUEST),
+    SUPPLIER_NOT_FOUND(8002, "Supplier not existed", HttpStatus.NOT_FOUND),
+
+    // ====== Product ======
+    PRODUCT_ALREADY_EXISTS(9001, "Product already existed", HttpStatus.BAD_REQUEST),
+    PRODUCT_NOT_FOUND(9002, "Product not existed", HttpStatus.NOT_FOUND)
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

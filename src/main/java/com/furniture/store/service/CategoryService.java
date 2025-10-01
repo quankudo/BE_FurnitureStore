@@ -2,6 +2,8 @@ package com.furniture.store.service;
 
 import com.furniture.store.dto.request.CategoryCreationRequest;
 import com.furniture.store.dto.response.CategoryResponse;
+import com.furniture.store.dto.response.PaginationResponse;
+import com.furniture.store.dto.response.UploadResponse;
 import com.furniture.store.entity.Category;
 import com.furniture.store.exception.AppException;
 import com.furniture.store.exception.ErrorCode;
@@ -11,10 +13,15 @@ import com.furniture.store.utils.SlugUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -35,14 +42,34 @@ public class CategoryService {
         categoryEntity.setSlug(slug);
 
         if (image != null && !image.isEmpty()) {
-            String imageUrl = cloudinaryService.uploadFile(image, "categories");
-            categoryEntity.setImageUrl(imageUrl);
+            UploadResponse imageUrl = cloudinaryService.uploadFile(image, "categories"+"/" + UUID.randomUUID());
+            categoryEntity.setImagePublicId(imageUrl.getPublicId());
+            categoryEntity.setImageUrl(imageUrl.getUrl());
         }
 
         return categoryMapper.toResponse(categoryRepository.save(categoryEntity));
     }
 
-    public List<CategoryResponse> getAll(){
+    public PaginationResponse<CategoryResponse> searchCategories(String keyword, int page, int size){
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
+        Page<Category> categories;
+
+        if(keyword != null && !keyword.isBlank()){
+            categories = categoryRepository.findByNameContainingIgnoreCase(keyword, pageable);
+        }
+        else {
+            categories = categoryRepository.findAll(pageable);
+        }
+
+        return new PaginationResponse<CategoryResponse>(
+                categories.getContent().stream().map(categoryMapper::toResponse).toList(),
+                categories.getNumber(),
+                categories.getTotalPages(),
+                categories.getTotalElements()
+        );
+    }
+
+    public List<CategoryResponse> getAll() {
         return categoryRepository.findAll().stream().map(categoryMapper::toResponse).toList();
     }
 

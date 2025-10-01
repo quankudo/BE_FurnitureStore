@@ -18,7 +18,8 @@ public class VariantImage {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "variant_id")
-     ProductVariant variant;
+    ProductVariant variant;
 
+    String imagePublicId;
     String imageUrl;
 }

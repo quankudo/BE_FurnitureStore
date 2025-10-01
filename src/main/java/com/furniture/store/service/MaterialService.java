@@ -32,4 +32,13 @@ public class MaterialService {
     public List<MaterialResponse> getAll(){
         return materialRepository.findAll().stream().map(materialMapper::toResponse).toList();
     }
+
+    public MaterialResponse update(MaterialRequest request, Long id){
+        Material material = materialRepository.findById(id)
+                .orElseThrow(()->new AppException(ErrorCode.MATERIAL_NOT_FOUND));
+
+        materialMapper.updateEntity(request, material);
+
+        return materialMapper.toResponse(materialRepository.save(material));
+    }
 }

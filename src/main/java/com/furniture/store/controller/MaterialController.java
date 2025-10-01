@@ -31,4 +31,12 @@ public class MaterialController {
                 .result(materialService.getAll())
                 .build();
     }
+
+    @PutMapping("/{id}")
+    public ApiResponse<MaterialResponse> update(@RequestBody MaterialRequest request,
+                                                @PathVariable Long id) {
+        return ApiResponse.<MaterialResponse>builder()
+                .result(materialService.update(request, id))
+                .build();
+    }
 }

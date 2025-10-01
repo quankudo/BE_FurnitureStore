@@ -32,4 +32,13 @@ public class ColorService {
     public List<ColorResponse> getAll(){
         return colorRepository.findAll().stream().map(colorMapper::toResponse).toList();
     }
+
+    public ColorResponse update(ColorRequest request, Long id){
+        Color color = colorRepository.findById(id)
+                .orElseThrow(()->new AppException(ErrorCode.COLOR_NOT_FOUND));
+
+        colorMapper.updateEntity(request, color);
+
+        return colorMapper.toResponse(colorRepository.save(color));
+    }
 }

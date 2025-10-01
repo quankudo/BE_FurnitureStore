@@ -14,6 +14,11 @@ public class MaterialMapper {
                 .build();
     }
 
+    public void updateEntity(MaterialRequest materialRequest, Material material) {
+        material.setMaterialName(materialRequest.getMaterialName());
+        material.setDescription(materialRequest.getDescription());
+    }
+
     public MaterialResponse toResponse(Material material){
         return MaterialResponse.builder()
                 .id(material.getId())

@@ -8,12 +8,11 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CategoryResponse {
+public class ProductInfoResponse {
     String id;
-    String name;
+    String productName;
+    String description;
     String slug;
-    String imageUrl;
-    Boolean isActive;
-    String desc;
     String imagePublicId;
+    String imageUrl;
 }

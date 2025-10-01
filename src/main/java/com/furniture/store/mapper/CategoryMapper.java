@@ -22,6 +22,7 @@ public class CategoryMapper {
                 .name(category.getName())
                 .isActive(category.isActive())
                 .imageUrl(category.getImageUrl())
+                .imagePublicId(category.getImagePublicId())
                 .build();
     }
 }

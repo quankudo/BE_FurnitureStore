@@ -97,7 +97,7 @@ public class UserService {
         User existsUser = userContextService.getCurrentUser();
 
         if (!passwordEncoder.matches(request.getOldPassword(), existsUser.getPassword())) {
-            throw new AppException(ErrorCode.INVALID_OLD_PASSWORD);
+            throw new AppException(ErrorCode.INVALID_PASSWORD);
         }
 
         String encodedNewPassword = passwordEncoder.encode(request.getNewPassword());

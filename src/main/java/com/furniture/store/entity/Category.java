@@ -15,12 +15,23 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
-    @Column(nullable = false, unique = true)
+
+    @Column(nullable = false, unique = true, length = 100)
     String name;
+
+    @Column(length = 255)
     String description;
-    @Column(nullable = false, unique = true)
+
+    @Column(nullable = false, unique = true, length = 150)
     String slug;
-    String imageUrl;
+
+    // Ảnh
     @Column(nullable = false)
-    boolean isActive=true;
+    String imageUrl;
+
+    @Column(nullable = false)
+    String imagePublicId;
+
+    @Column(nullable = false)
+    boolean isActive = true;
 }

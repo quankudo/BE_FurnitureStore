@@ -5,14 +5,19 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tbl_product_variants")
-@Builder
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductVariant {
     @Id
@@ -36,6 +41,7 @@ public class ProductVariant {
 
     private Integer stockQuantity;
 
+    @Builder.Default
     @OneToMany(mappedBy = "variant", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<VariantImage> images;
+    private Set<VariantImage> images = new HashSet<>();
 }

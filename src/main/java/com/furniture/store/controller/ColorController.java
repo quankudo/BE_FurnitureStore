@@ -31,4 +31,12 @@ public class ColorController {
                 .result(colorService.getAll())
                 .build();
     }
+
+    @PutMapping("/{id}")
+    public ApiResponse<ColorResponse> update(@RequestBody ColorRequest request,
+                                             @PathVariable Long id){
+        return ApiResponse.<ColorResponse>builder()
+                .result(colorService.update(request, id))
+                .build();
+    }
 }

@@ -3,15 +3,23 @@ package com.furniture.store.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tbl_products")
-@Builder
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Product {
     @Id
@@ -23,6 +31,7 @@ public class Product {
 
     String description;
     String slug;
+    String imagePublicId;
 
     String imageUrl;
 
@@ -34,9 +43,25 @@ public class Product {
     @JoinColumn(name = "supplier_id")
     Supplier supplier;
 
+    @Builder.Default
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<ProductVariant> variants;
+    Set<ProductVariant> variants = new HashSet<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductAttribute> attributes;
+    Set<ProductAttribute> attributes = new HashSet<>();
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    LocalDateTime updatedAt;
+
+    @CreatedBy
+    @Column(updatable = false)
+    String createdBy;
+
+    @LastModifiedBy
+    String updatedBy;
 }

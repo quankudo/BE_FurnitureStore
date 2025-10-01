@@ -3,17 +3,16 @@ package com.furniture.store.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CategoryResponse {
-    String id;
-    String name;
-    String slug;
-    String imageUrl;
-    Boolean isActive;
-    String desc;
-    String imagePublicId;
+public class PaginationResponse<T> {
+    List<T> items;
+    int currentPage;
+    int totalPages;
+    long totalItems;
 }
