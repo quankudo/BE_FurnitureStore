@@ -42,6 +42,15 @@ public class UserMapper {
         return userResponse;
     }
 
+    public UserResponse toPreView(User user){
+        UserResponse userResponse = new UserResponse();
+        userResponse.setId(user.getId());
+        userResponse.setEmail(user.getEmail());
+        userResponse.setFirstName(user.getFirstName());
+        userResponse.setLastName(user.getLastName());
+        return userResponse;
+    }
+
     public void toUserEntityUpdate(User user, UserUpdateInfoRequest request){
         user.setLastName(request.getLastName());
         user.setFirstName(request.getFirstName());

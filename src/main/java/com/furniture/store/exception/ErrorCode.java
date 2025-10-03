@@ -75,7 +75,19 @@ public enum ErrorCode {
 
     // ====== Product ======
     PRODUCT_ALREADY_EXISTS(9001, "Product already existed", HttpStatus.BAD_REQUEST),
-    PRODUCT_NOT_FOUND(9002, "Product not existed", HttpStatus.NOT_FOUND)
+    PRODUCT_NOT_FOUND(9002, "Product not existed", HttpStatus.NOT_FOUND),
+
+    // ====== Blog Category ======
+    BLOG_CATEGORY_ALREADY_EXISTS(9001, "Blog category already existed", HttpStatus.BAD_REQUEST),
+    BLOG_CATEGORY_NOT_FOUND(9002, "Blog category not existed", HttpStatus.NOT_FOUND),
+
+    // ====== Tag Category ======
+    TAG_ALREADY_EXISTS(9001, "Tag already existed", HttpStatus.BAD_REQUEST),
+    TAG_NOT_FOUND(9002, "Tag not existed", HttpStatus.NOT_FOUND),
+
+    // ====== Tag Category ======
+    BLOG_ALREADY_EXISTS(9001, "Blog already existed", HttpStatus.BAD_REQUEST),
+    BLOG_NOT_FOUND(9002, "Blog not existed", HttpStatus.NOT_FOUND),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
