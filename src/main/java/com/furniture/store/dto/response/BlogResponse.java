@@ -1,10 +1,12 @@
 package com.furniture.store.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.furniture.store.enums.ReactionType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Set;
 
 @Data
@@ -24,6 +26,7 @@ public class BlogResponse {
     BlogCategoryResponse BlogCategory;
     Set<TagResponse> listTags;
     UserResponse author;
+    Map<ReactionType, Long> summaryResponse;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
 }

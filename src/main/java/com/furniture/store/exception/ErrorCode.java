@@ -88,6 +88,10 @@ public enum ErrorCode {
     // ====== Tag Category ======
     BLOG_ALREADY_EXISTS(9001, "Blog already existed", HttpStatus.BAD_REQUEST),
     BLOG_NOT_FOUND(9002, "Blog not existed", HttpStatus.NOT_FOUND),
+
+    // ====== Comment ======
+    COMMENT_ALREADY_EXISTS(9001, "Comment already existed", HttpStatus.BAD_REQUEST),
+    COMMENT_NOT_FOUND(9002, "Comment not existed", HttpStatus.NOT_FOUND),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
