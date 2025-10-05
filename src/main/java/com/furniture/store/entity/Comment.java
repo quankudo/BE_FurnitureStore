@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "comments")
+@Table(name = "tbl_comments")
 @Data
 @Builder
 @NoArgsConstructor

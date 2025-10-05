@@ -1,10 +1,12 @@
 package com.furniture.store.controller;
 
+import com.furniture.store.constant.PredefinedPermission;
 import com.furniture.store.constant.PredefinedRole;
 import com.furniture.store.dto.request.ChangePasswordRequest;
 import com.furniture.store.dto.request.UserCreationRequest;
 import com.furniture.store.dto.request.UserUpdateInfoRequest;
 import com.furniture.store.dto.response.ApiResponse;
+import com.furniture.store.dto.response.PaginationResponse;
 import com.furniture.store.dto.response.UserResponse;
 import com.furniture.store.dto.response.UserUpdateInfoResponse;
 import com.furniture.store.service.UserService;
@@ -43,11 +45,19 @@ public class UserController {
     }
 
     @GetMapping
-    ApiResponse<List<UserResponse>> getAll() {
-        return ApiResponse.<List<UserResponse>>builder()
-                .result(userService.getAll())
+    public ApiResponse<PaginationResponse<UserResponse>> getAllUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false, defaultValue = "") String keyword,
+            @RequestParam(required = false, defaultValue = PredefinedRole.USER_ROLE) String role,
+            @RequestParam(required = false, defaultValue = "") String permission
+    ) {
+        PaginationResponse<UserResponse> users = userService.getAll(page, size, keyword, role, permission);
+        return ApiResponse.<PaginationResponse<UserResponse>>builder()
+                .result(users)
                 .build();
     }
+
 
     @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable String id){

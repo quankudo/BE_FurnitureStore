@@ -92,6 +92,10 @@ public enum ErrorCode {
     // ====== Comment ======
     COMMENT_ALREADY_EXISTS(9001, "Comment already existed", HttpStatus.BAD_REQUEST),
     COMMENT_NOT_FOUND(9002, "Comment not existed", HttpStatus.NOT_FOUND),
+
+    // ====== Cart ======
+    CART_ITEM_NOT_FOUND(9002, "Cart item not existed", HttpStatus.NOT_FOUND),
+    INVALID_QUANTITY(9002, "Invalid quantity", HttpStatus.BAD_REQUEST),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

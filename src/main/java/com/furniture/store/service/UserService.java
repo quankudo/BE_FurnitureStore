@@ -4,6 +4,7 @@ import com.furniture.store.constant.PredefinedRole;
 import com.furniture.store.dto.request.ChangePasswordRequest;
 import com.furniture.store.dto.request.UserCreationRequest;
 import com.furniture.store.dto.request.UserUpdateInfoRequest;
+import com.furniture.store.dto.response.PaginationResponse;
 import com.furniture.store.dto.response.UserResponse;
 import com.furniture.store.dto.response.UserUpdateInfoResponse;
 import com.furniture.store.entity.Role;
@@ -11,18 +12,22 @@ import com.furniture.store.entity.User;
 import com.furniture.store.exception.AppException;
 import com.furniture.store.exception.ErrorCode;
 import com.furniture.store.mapper.UserMapper;
-import com.furniture.store.repository.PermissionRepository;
 import com.furniture.store.repository.RoleRepository;
 import com.furniture.store.repository.UserRepository;
+import com.furniture.store.specification.UserSpecification;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -32,7 +37,6 @@ import java.util.UUID;
 @Slf4j
 public class UserService {
     UserRepository userRepository;
-    PermissionRepository permissionRepository;
     RoleRepository roleRepository;
     UserMapper userMapper;
     UserContextService userContextService;
@@ -46,7 +50,7 @@ public class UserService {
 
     private User createAccount(UserCreationRequest user, String roleName) {
         if(userRepository.existsByEmail(user.getEmail())){
-            throw new RuntimeException("Da ton tai tai khoan voi email " + user.getEmail());
+            throw new RuntimeException("Da ton tai account voi email " + user.getEmail());
         }
 
         Role role = roleRepository.findByName(roleName)
@@ -87,10 +91,32 @@ public class UserService {
         return userMapper.toUserUpdateInfoRes(userRepository.save(existsUser));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<UserResponse> getAll() {
-        return userRepository.findAll().stream().map(userMapper::toResponse).toList();
+    //@PreAuthorize("hasRole('ADMIN')")
+    public PaginationResponse<UserResponse> getAll(
+            int page,
+            int size,
+            String keyword,
+            String role,
+            String permission
+    ) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("firstName"));
+
+        Specification<User> spec = Specification.allOf(
+                UserSpecification.hasName(keyword),
+                UserSpecification.hasRole(role),
+                UserSpecification.hasPermission(permission)
+        );
+
+        Page<User> users = userRepository.findAll(spec, pageable);
+
+        return new PaginationResponse<>(
+                users.getContent().stream().map(userMapper::toResponse).toList(),
+                users.getNumber(),
+                users.getTotalPages(),
+                users.getTotalElements()
+        );
     }
+
 
     public void changePassword(ChangePasswordRequest request) {
         User existsUser = userContextService.getCurrentUser();
@@ -103,7 +129,7 @@ public class UserService {
         existsUser.setPassword(encodedNewPassword);
 
         userRepository.save(existsUser);
-        //Sau khi thay đổi password thì phải logout để user đó đăng nhập lại bằng mật khẩu mới
+        //Sau khi change password thì must logout để user đó login lại bằng new password
     }
 
 }
