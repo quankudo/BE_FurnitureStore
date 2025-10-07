@@ -96,6 +96,13 @@ public enum ErrorCode {
     // ====== Cart ======
     CART_ITEM_NOT_FOUND(9002, "Cart item not existed", HttpStatus.NOT_FOUND),
     INVALID_QUANTITY(9002, "Invalid quantity", HttpStatus.BAD_REQUEST),
+
+    // ====== Notification Type ======
+    NOTIFICATION_TYPE_NOT_FOUND(9002, "Notification type not existed", HttpStatus.NOT_FOUND),
+    NOTIFICATION_TYPE_ALREADY_EXISTS(9002, "Notification type already existed", HttpStatus.BAD_REQUEST),
+
+    // ====== Notification ======
+    NOTIFICATION_NOT_FOUND(9002, "Notification not existed", HttpStatus.NOT_FOUND),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

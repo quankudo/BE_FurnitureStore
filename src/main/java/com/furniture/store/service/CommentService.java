@@ -60,12 +60,12 @@ public class CommentService {
 
     public PaginationResponse<CommentResponse> getComments(int page, int size, Long blogId) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
-        Page<Comment> blogs = commentRepository.findByParentIsNullAndBlogId(pageable, blogId);
+        Page<Comment> comments = commentRepository.findByParentIsNullAndBlogId(pageable, blogId);
         return new PaginationResponse<>(
-                blogs.getContent().stream().map(c-> commentMapper.toResponse(c, 0, 0)).toList(),
-                blogs.getNumber(),
-                blogs.getTotalPages(),
-                blogs.getTotalElements()
+                comments.getContent().stream().map(c-> commentMapper.toResponse(c, 0, 0)).toList(),
+                comments.getNumber(),
+                comments.getTotalPages(),
+                comments.getTotalElements()
         );
     }
 
